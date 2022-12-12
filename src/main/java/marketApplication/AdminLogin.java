@@ -3,9 +3,9 @@ package marketApplication;
 import java.util.Scanner;
 
 public class AdminLogin {
+    public static Scanner input = new Scanner(System.in);
 
     public static void login(){
-        Scanner input = new Scanner(System.in);
         System.out.println("You need to be logged in to access the admin panel.\n *******# Login #*******\n");
         System.out.print("Username: ");
         String username = input.next();
@@ -19,5 +19,14 @@ public class AdminLogin {
             //Menu
         }
     }
+
+
+
+
+
+
+
+
+
 
 }

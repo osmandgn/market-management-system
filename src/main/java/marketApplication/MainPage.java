@@ -15,7 +15,7 @@ public class MainPage {
              choice = input.nextInt();
              switch (choice){
                  case 1:
-                     //Admin Panel
+                     AdminLogin.login();
                      break;
                  case 2:
                      // Customer Panel
@@ -25,6 +25,9 @@ public class MainPage {
         }while (choice != 3);
 
     }
+
+
+
 
 
 }

@@ -138,13 +138,13 @@ public class DatabaseOperations {
         getStatement();
         boolean result = false;
         try {
-            String sql = "SELECT * FROM products";
+            String sql = "SELECT * FROM admins";
             ResultSet resultSet = st.executeQuery(sql);
             while (resultSet.next()) {
                 String uName = resultSet.getString(1);
                 String pswrd = resultSet.getString(2);
-                if (username.equals(username) && password.equals(pswrd)){
-                    return true;
+                if (username.equals(uName) && password.equals(pswrd)){
+                    result = true;
                 }
             }
         }catch (SQLException e){

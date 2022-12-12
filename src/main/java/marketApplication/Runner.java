@@ -2,7 +2,6 @@ package marketApplication;
 
 public class Runner{
     public static void main(String[] args) {
-        DatabaseOperations.showProducts();
-
+      MainPage.marketApp();
     }
 }
