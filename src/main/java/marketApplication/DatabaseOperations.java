@@ -1,5 +1,7 @@
 package marketApplication;
+
 import java.sql.*;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,19 +14,17 @@ public class DatabaseOperations {
     // Tum Metodlara  AnaMenuye  veya Admin Paneline Donus Secenegi
 
 
-
-
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         try {
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/osman", "postgres", "osman001");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return con;
     }
 
-    public static Statement getStatement(){
+    public static Statement getStatement() {
         try {
             st = con.createStatement();
         } catch (SQLException e) {
@@ -34,8 +34,7 @@ public class DatabaseOperations {
     }
 
 
-
-    public static void addNewProduct(){
+    public static void addNewProduct() {
         getConnection();
         getStatement();
         try {
@@ -49,34 +48,34 @@ public class DatabaseOperations {
             int stock = input.nextInt();
             String sql = "INSERT INTO products VALUES (default, '" + product_name + "', '" + category + "', " + price + ", " + stock + " )";
             st.execute(sql);
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Please input invalid information");
             input.nextLine();
             addNewProduct();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
         System.out.println("Product Added!");
 
     }
 
-        public static void deleteProduct(){
-            getConnection();
-            getStatement();
-            try {
-                System.out.println("Enter the right name of the product you want to delete");
-                String product_name = input.next();
-                String sql = "Delete from products where product_name = '" + product_name + "'";
-                st.execute(sql);
-            }catch (SQLException e){
-                System.out.println("Database Connection Error ");
-            }
+    public static void deleteProduct() {
+        getConnection();
+        getStatement();
+        try {
+            System.out.println("Enter the right name of the product you want to delete");
+            String product_name = input.next();
+            String sql = "Delete from products where product_name = '" + product_name + "'";
+            st.execute(sql);
+        } catch (SQLException e) {
+            System.out.println("Database Connection Error ");
+        }
 
-            System.out.println("Product Deleted!");
+        System.out.println("Product Deleted!");
 
     }
 
-    public static void updatePrice(){
+    public static void updatePrice() {
         getConnection();
         getStatement();
         try {
@@ -84,18 +83,19 @@ public class DatabaseOperations {
             String product_name = input.next();
             System.out.println("Enter the new price");
             int newPrice = input.nextInt();
-            String sql = "UPDATE products SET price = "+ newPrice + " WHERE product_name = '" + product_name + "'";
+            String sql = "UPDATE products SET price = " + newPrice + " WHERE product_name = '" + product_name + "'";
             st.execute(sql);
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Please input valid information");
             input.nextLine();
             updatePrice();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
         System.out.println("Price of Product Updated");
     }
-    public static void updateStock(){
+
+    public static void updateStock() {
         getConnection();
         getStatement();
         try {
@@ -103,19 +103,19 @@ public class DatabaseOperations {
             String product_name = input.next();
             System.out.println("Enter the new stock");
             int newStock = input.nextInt();
-            String sql = "UPDATE products SET stock = "+ newStock + " WHERE product_name = '" + product_name + "'";
+            String sql = "UPDATE products SET stock = " + newStock + " WHERE product_name = '" + product_name + "'";
             st.execute(sql);
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Please input valid information");
             input.nextLine();
             updateStock();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
         System.out.println("Stock of Product Updated");
     }
 
-    public static void showProducts(){
+    public static void showProducts() {
         getConnection();
         getStatement();
         try {
@@ -123,19 +123,35 @@ public class DatabaseOperations {
             ResultSet resultSet = st.executeQuery(sql);
             System.out.println("ID \t Name \t Category \t Price \t Stock ");
             System.out.println("*".repeat(50));
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 System.out.println(resultSet.getInt(1) + "\t" + resultSet.getString(2) + "\t\t" +
-                        resultSet.getString(3) + "\t\t" + resultSet.getInt(4) +"\t\t" + resultSet.getInt(5));
+                        resultSet.getString(3) + "\t\t" + resultSet.getInt(4) + "\t\t" + resultSet.getInt(5));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
     }
 
 
-
-
-
+    public static boolean getAdmins(String username, String password) {
+        getConnection();
+        getStatement();
+        boolean result = false;
+        try {
+            String sql = "SELECT * FROM products";
+            ResultSet resultSet = st.executeQuery(sql);
+            while (resultSet.next()) {
+                String uName = resultSet.getString(1);
+                String pswrd = resultSet.getString(2);
+                if (username.equals(username) && password.equals(pswrd)){
+                    return true;
+                }
+            }
+        }catch (SQLException e){
+            System.out.println("Database Connection Error ");
+        }
+        return result;
+    }
 
 
 }
