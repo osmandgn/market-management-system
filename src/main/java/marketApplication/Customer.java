@@ -1,21 +1,19 @@
 package marketApplication;
 
-public class CustomerPojo {
+public class Customer {
     private String customerFirstName;
     private String customerLastName;
     private String userName;
     private String mailAdress;
-    private static int customer_id = 0001;
     private String password;
 
 
-    public CustomerPojo(String customerFirstName, String customerLastName, String userName, String mailAdress ,String password){
+    public Customer(String customerFirstName, String customerLastName, String mailAdress, String userName, String password){
         this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;
         this.userName = userName;
         this.password = password;
         this.mailAdress = mailAdress;
-        customer_id++;
     }
 
 
@@ -49,14 +47,6 @@ public class CustomerPojo {
 
     public void setMailAdress(String mailAdress) {
         this.mailAdress = mailAdress;
-    }
-
-    public static int getCustomer_id() {
-        return customer_id;
-    }
-
-    public static void setCustomer_id(int customer_id) {
-        CustomerPojo.customer_id = customer_id;
     }
 
     public String getPassword() {

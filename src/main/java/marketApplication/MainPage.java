@@ -18,7 +18,7 @@ public class MainPage {
                      AdminUtils.login();
                      break;
                  case "2":
-                     // Customer Panel
+                     CustomerPanel.customerPanel();
                      break;
                  case "3":
                      AdminUtils.exit();

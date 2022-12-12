@@ -175,16 +175,16 @@ public class DatabaseOperations {
     }
 
 
-    public static void customerRegisteration(String fName, String sName, String mail, String username, String password) {
+    public static void customerRegisteration(Customer customer) {
         getConnection();
         getStatement();
         try {
-            String sql = "INSERT INTO customers VALUES (default, '" + fName + "', '" + sName + "', '" + mail + "', '" + username + "', '" + password + "' )";
+            String sql = "INSERT INTO customers VALUES (default, '" + customer.getCustomerFirstName() + "', '" + customer.getCustomerLastName() + "', '" + customer.getMailAdress() + "', '" + customer.getUserName() + "', '" + customer.getPassword() + "' )";
             st.execute(sql);
         } catch (InputMismatchException e) {
             System.out.println("Please input invalid information");
             input.nextLine();
-            customerRegisteration(fName, sName, mail, username, password);
+            customerRegisteration(customer);
         } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
@@ -192,5 +192,53 @@ public class DatabaseOperations {
         CustomerUtils.login();
     }
 
+
+    public static void showCustomerProducts() {
+        getConnection();
+        getStatement();
+        try {
+            String sql = "SELECT * FROM products";
+            ResultSet resultSet = st.executeQuery(sql);
+            System.out.println("ID \t Name \t Category \t Price \t Stock ");
+            System.out.println("*".repeat(50));
+            while (resultSet.next()) {
+                System.out.println(resultSet.getInt(1) + "\t" + resultSet.getString(2) + "\t\t" +
+                        resultSet.getString(3) + "\t\t" + resultSet.getInt(4) + "\t\t" + resultSet.getInt(5));
+            }
+        } catch (SQLException e) {
+            System.out.println("Database Connection Error ");
+        }
+        CustomerUtils.makeAChoice();
+    }
+
+    public static int getPriceOfProduct(int id){
+        getConnection();
+        getStatement();
+        int price = 0;
+        try {
+            String sql = "Select price from products where product_id = " + id;
+            ResultSet resultSet = st.executeQuery(sql);
+            price = resultSet.getInt(1);
+        }catch (SQLException e){
+            System.out.println("Database Connection Error");
+            CustomerPage.customerPage();
+        }
+        return price;
+    }
+
+    public static String getNameOfProduct(int id){
+        getConnection();
+        getStatement();
+        String product_name = "";
+        try {
+            String sql = "Select product_name from products where product_id = " + id;
+            ResultSet resultSet = st.executeQuery(sql);
+            product_name = resultSet.getString(1);
+        }catch (SQLException e){
+            System.out.println("Database Connection Error");
+            CustomerPage.customerPage();
+        }
+        return product_name;
+    }
 
 }

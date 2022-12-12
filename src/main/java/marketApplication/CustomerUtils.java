@@ -1,10 +1,6 @@
 package marketApplication;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Scanner;
-
-import static marketApplication.DatabaseOperations.customerRegisteration;
 
 public class CustomerUtils {
     public static Scanner input = new Scanner(System.in);
@@ -37,7 +33,8 @@ public class CustomerUtils {
             String userName = input.next();
             System.out.println("Password: ");
             String psw = input.next();
-            customerRegisteration(fName, sName, mail, userName, psw);
+            Customer customer = new Customer(fName, sName, mail, userName, psw);
+            DatabaseOperations.customerRegisteration(customer);
         }catch (Exception e){
             System.out.println("An error occurred");
             makeAChoice();
