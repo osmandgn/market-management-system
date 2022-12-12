@@ -22,8 +22,6 @@ public class MainPage {
                      break;
              }
 
-
-
         }while (choice != 3);
 
     }
