@@ -10,19 +10,24 @@ public class MainPage {
                 "\n2 - Custormer Panel" +
                 "\n3 - Exit\n");
         Scanner input = new Scanner(System.in);
-        int choice;
+        String choice;
         do {
-             choice = input.nextInt();
+             choice = input.next();
              switch (choice){
-                 case 1:
-                     AdminLogin.login();
+                 case "1":
+                     AdminUtils.login();
                      break;
-                 case 2:
+                 case "2":
                      // Customer Panel
                      break;
+                 case "3":
+                     AdminUtils.exit();
+                     break;
+                 default:
+                     System.out.println("Invalid Choice");
              }
 
-        }while (choice != 3);
+        }while (true);
 
     }
 

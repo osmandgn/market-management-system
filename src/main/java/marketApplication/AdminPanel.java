@@ -12,23 +12,33 @@ public class AdminPanel {
             switch (choice){
                 case "1":
                     DatabaseOperations.showProducts();
+                    AdminUtils.makeAChoice();
                     break;
                 case "2":
                     DatabaseOperations.addNewProduct();
+                    AdminUtils.makeAChoice();
                     break;
                 case "3":
                     DatabaseOperations.deleteProduct();
+                    AdminUtils.makeAChoice();
                     break;
                 case "4":
                     DatabaseOperations.updatePrice();
+                    AdminUtils.makeAChoice();
                     break;
                 case "5":
                     DatabaseOperations.updateStock();
+                    AdminUtils.makeAChoice();
                     break;
                 case "6":
                     MainPage.marketApp();
+                    AdminUtils.makeAChoice();
                     break;
                 case "0":
+                    AdminUtils.exit();
+                    break;
+                default:
+                    System.out.println("Invalid Choice");
 
             }
         }

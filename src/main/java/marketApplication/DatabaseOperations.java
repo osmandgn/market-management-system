@@ -10,10 +10,6 @@ public class DatabaseOperations {
     private static Statement st;
     private static Scanner input = new Scanner(System.in);
 
-
-    // Tum Metodlara  AnaMenuye  veya Admin Paneline Donus Secenegi
-
-
     public static Connection getConnection() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -56,6 +52,7 @@ public class DatabaseOperations {
             System.out.println("Database Connection Error ");
         }
         System.out.println("Product Added!");
+        AdminUtils.makeAChoice();
 
     }
 
@@ -72,6 +69,7 @@ public class DatabaseOperations {
         }
 
         System.out.println("Product Deleted!");
+        AdminUtils.makeAChoice();
 
     }
 
@@ -93,6 +91,7 @@ public class DatabaseOperations {
             System.out.println("Database Connection Error ");
         }
         System.out.println("Price of Product Updated");
+        AdminUtils.makeAChoice();
     }
 
     public static void updateStock() {
@@ -130,6 +129,7 @@ public class DatabaseOperations {
         } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
+        AdminUtils.makeAChoice();
     }
 
 
@@ -143,14 +143,53 @@ public class DatabaseOperations {
             while (resultSet.next()) {
                 String uName = resultSet.getString(1);
                 String pswrd = resultSet.getString(2);
-                if (username.equals(uName) && password.equals(pswrd)){
+                if (username.equals(uName) && password.equals(pswrd)) {
                     result = true;
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Database Connection Error ");
         }
         return result;
+    }
+
+
+    public static boolean customerLogin(String username, String password) {
+        getConnection();
+        getStatement();
+        boolean result = false;
+        try {
+            String sql = "SELECT * FROM customers";
+            ResultSet resultSet = st.executeQuery(sql);
+            while (resultSet.next()) {
+                String uName = resultSet.getString(5);
+                String pswrd = resultSet.getString(6);
+                if (username.equals(uName) && password.equals(pswrd)) {
+                    result = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Database Connection Error ");
+        }
+        return result;
+    }
+
+
+    public static void customerRegisteration(String fName, String sName, String mail, String username, String password) {
+        getConnection();
+        getStatement();
+        try {
+            String sql = "INSERT INTO customers VALUES (default, '" + fName + "', '" + sName + "', '" + mail + "', '" + username + "', '" + password + "' )";
+            st.execute(sql);
+        } catch (InputMismatchException e) {
+            System.out.println("Please input invalid information");
+            input.nextLine();
+            customerRegisteration(fName, sName, mail, username, password);
+        } catch (SQLException e) {
+            System.out.println("Database Connection Error ");
+        }
+        System.out.println("Registered");
+        CustomerUtils.login();
     }
 
 
